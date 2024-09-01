@@ -1,4 +1,12 @@
 import os
+import re
+
+def sort_numerically(file_list):
+    def extract_number(filename):
+        match = re.search(r'(\d+)', filename)
+        return int(match.group(1)) if match else float('inf')
+
+    return sorted(file_list, key=extract_number)
 
 def generate_markdown_table(base_folder, output_file):
     # Find all days (subdirectories)
@@ -7,7 +15,8 @@ def generate_markdown_table(base_folder, output_file):
     # Collect all files from each day
     files_by_day = {}
     for day in days:
-        files = sorted(os.listdir(os.path.join(base_folder, day)))
+        files = os.listdir(os.path.join(base_folder, day))
+        files = sort_numerically(files)
         files_by_day[day] = files
     
     # Find the maximum number of files any day has
@@ -39,4 +48,3 @@ def generate_markdown_table(base_folder, output_file):
 
 # Example usage
 generate_markdown_table('PCC-DS-391', 'output_table.txt')
-
