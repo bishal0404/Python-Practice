@@ -20,4 +20,4 @@ for i in range(1,8):
       else:
         print(fact(i-1)//(fact(j)*fact(i-1-j)),end=" ")
     print()
-    print("") 
+    
